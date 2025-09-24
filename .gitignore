@@ -116,56 +116,18 @@ fastlane/test_output
 
 iOSInjectionProject/
 
-# Vapor / Swift Server
-Packages/
-.build/
-xcuserdata/
-*.xcodeproj
-.swiftpm/
-Package.resolved
-.env
-.env.*
-
-# Vapor specific
-Config/secrets/
-Public/uploads/
-Resources/Certificates/
-
-# Database
+# Core Data
 *.sqlite
 *.sqlite-shm
 *.sqlite-wal
-*.db
-
-# Logs
-Logs/
-*.log
-logs/
-
-# Heroku
-.heroku/
-Procfile.local
-
-# Environment variables
-.env
-.env.local
-.env.development
-.env.test
-.env.production
-
-# IDE
-.vscode/
-.idea/
 
 # Temporary files
 tmp/
 temp/
 
-# JWT Keys
-*.pem
-private_key.txt
-public_key.txt
-jwt_*.key
+# IDE
+.vscode/
+.idea/
 
-# Claude Code project instructions
+# Claude Code
 CLAUDE.md
