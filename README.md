@@ -8,8 +8,9 @@ A SwiftUI iOS habit tracking application focused on clean architecture and user 
 
 ```
 HabitTrackerApp/
-├── iOS-Client/           # SwiftUI iOS Application
-├── Shared/              # Shared models and utilities
+├── HabitTrackerApp.xcodeproj    # Xcode project
+├── HabitTrackerApp/             # SwiftUI iOS Application
+├── Shared/                      # Shared models and utilities
 └── README.md
 ```
 
@@ -79,7 +80,6 @@ HabitTrackerApp/
 
 ### Setup
 ```bash
-cd iOS-Client
 open HabitTrackerApp.xcodeproj
 # Build and run in Xcode simulator
 ```
@@ -135,19 +135,18 @@ open HabitTrackerApp.xcodeproj
 
 ```
 HabitTrackerApp/
-├── iOS-Client/
-│   ├── HabitTrackerApp.xcodeproj      # Xcode project
-│   ├── HabitTrackerApp/               # iOS app source
-│   │   ├── HabitTrackerAppApp.swift   # App entry point
-│   │   ├── ContentView.swift          # Main view
-│   │   ├── Models/                    # Core Data models
-│   │   ├── Views/                     # SwiftUI views
-│   │   ├── ViewModels/                # MVVM view models
-│   │   ├── Services/                  # Data services
-│   │   └── Assets.xcassets/           # App assets
-│   ├── HabitTrackerAppTests/          # Unit tests
-│   ├── HabitTrackerAppUITests/        # UI tests
-│   └── Widgets/                       # Widget extension
+├── HabitTrackerApp.xcodeproj          # Xcode project
+├── HabitTrackerApp/                   # iOS app source
+│   ├── HabitTrackerAppApp.swift       # App entry point
+│   ├── ContentView.swift              # Main view
+│   ├── Models/                        # Core Data models
+│   ├── Views/                         # SwiftUI views
+│   ├── ViewModels/                    # MVVM view models
+│   ├── Services/                      # Data services
+│   └── Assets.xcassets/               # App assets
+├── HabitTrackerAppTests/              # Unit tests
+├── HabitTrackerAppUITests/            # UI tests
+├── Widgets/                           # Widget extension
 ├── Shared/                            # Shared models and utilities
 ├── CLAUDE.md                          # Claude Code guidance
 ├── LICENSE
