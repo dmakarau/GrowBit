@@ -28,6 +28,7 @@ struct LoginScreen: View {
                 clientErrorMessage = loginResponseDTO.reason ?? ""
             } else {
                 // take the user to categories list screen
+                appState.routes.append(.categoriesList)
             }
         } catch {
             serverErrorMessage = error.localizedDescription

@@ -44,6 +44,10 @@ struct RegistrationScreen: View {
 
                 }.buttonStyle(.borderless)
                     .disabled(!isFormValid)
+                Spacer()
+                Button("Login") {
+                    appState.routes.append(.login)
+                }.buttonStyle(.borderless)
             }
             Text(errorMessgeState ?? "")
         }
