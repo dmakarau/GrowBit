@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F2974D292E9028A90049D217 /* HabitTrackerAppSharedDTO in Frameworks */ = {isa = PBXBuildFile; productRef = F2974D282E9028A90049D217 /* HabitTrackerAppSharedDTO */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		F226D5B22E83352C00B9858E /* HabitTrackerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabitTrackerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2974D292E9028A90049D217 /* HabitTrackerAppSharedDTO in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = HabitTrackerApp;
 			packageProductDependencies = (
+				F2974D282E9028A90049D217 /* HabitTrackerAppSharedDTO */,
 			);
 			productName = HabitTrackerApp;
 			productReference = F226D5B22E83352C00B9858E /* HabitTrackerApp.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = F226D5A92E83352C00B9858E;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				F2974D272E9028A90049D217 /* XCRemoteSwiftPackageReference "HabitTrackerAppSharedDTO" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F226D5B32E83352C00B9858E /* Products */;
 			projectDirPath = "";
@@ -334,6 +343,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F2974D272E9028A90049D217 /* XCRemoteSwiftPackageReference "HabitTrackerAppSharedDTO" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmakarau/HabitTrackerAppSharedDTO.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F2974D282E9028A90049D217 /* HabitTrackerAppSharedDTO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F2974D272E9028A90049D217 /* XCRemoteSwiftPackageReference "HabitTrackerAppSharedDTO" */;
+			productName = HabitTrackerAppSharedDTO;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F226D5AA2E83352C00B9858E /* Project object */;
 }

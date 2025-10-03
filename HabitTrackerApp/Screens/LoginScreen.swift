@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HabitTrackerAppSharedDTO
 
 struct LoginScreen: View {
 

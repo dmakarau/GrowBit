@@ -38,6 +38,7 @@ HabitTrackerApp/
 - **Calendar Integration**: Native iOS calendar components
 - **SF Symbols**: Apple's icon system
 - **WidgetKit**: Home screen widget support
+- **HabitTrackerAppSharedDTO**: Shared Swift package for data transfer objects with backend
 
 ## 📋 Core Data Models
 
@@ -94,6 +95,8 @@ open HabitTrackerApp.xcodeproj
 ### Phase 1: Foundation ✅
 - [x] Project structure setup and organization
 - [x] Basic SwiftUI client structure
+- [x] User registration and login functionality
+- [x] Backend integration with shared DTO package
 - [ ] Core Data model setup
 - [ ] Basic UI navigation structure
 

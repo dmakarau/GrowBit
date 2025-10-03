@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import HabitTrackerAppSharedDTO
 
 @Observable
 class HabitsViewModel {
