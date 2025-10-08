@@ -9,26 +9,49 @@ import SwiftUI
 
 @main
 struct HabitTrackerAppApp: App {
-    @State private var appState = AppState()
-    @State private var habitsViewModel = HabitsViewModel()
+    @State private var coordinator = AppCoordinator()
+
+    let httpClient: HTTPClient
+    let authService: AuthenticationServiceProtocol
+    let networkService: NetworkServiceProtocol
+
+    init() {
+        self.authService = AuthenticationService()
+        self.httpClient = HTTPClient(authService: authService)
+        self.networkService = NetworkService(httpClient: httpClient, authService: authService)
+    }
 
     var body: some Scene {
         WindowGroup {
-            NavigationStack(path: $appState.routes) {
-                RegistrationScreen()
-                    .navigationDestination(for: Route.self) { route in
-                        switch route {
-                        case .login:
-                            LoginScreen()
-                        case .register:
-                            RegistrationScreen()
-                        case .categoriesList:
-                            Text("Categories List") // CategoriesListScreen()
-                        }
+            NavigationStack(path: $coordinator.routes) {
+                RegistrationScreen(
+                    viewModel: RegistrationViewModel(
+                        networkService: networkService,
+                        coordinator: coordinator
+                    )
+                )
+                .navigationDestination(for: Route.self) { route in
+                    switch route {
+                    case .login:
+                        LoginScreen(
+                            viewModel: LoginViewModel(
+                                networkService: networkService,
+                                authService: authService,
+                                coordinator: coordinator
+                            )
+                        )
+                    case .register:
+                        RegistrationScreen(
+                            viewModel: RegistrationViewModel(
+                                networkService: networkService,
+                                coordinator: coordinator
+                            )
+                        )
+                    case .categoriesList:
+                        Text("Categories List") // CategoriesListScreen()
                     }
+                }
             }
-            .environment(habitsViewModel)
-            .environment(appState)
         }
     }
 }

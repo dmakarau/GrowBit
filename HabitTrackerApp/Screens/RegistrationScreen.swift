@@ -10,56 +10,53 @@ import Observation
 import HabitTrackerAppSharedDTO
 
 struct RegistrationScreen: View {
-    
-    @Environment(HabitsViewModel.self) private var habitsViewModel
-    @Environment(AppState.self) private var appState
-    @State var username = ""
-    @State var password = ""
-    @State var errorMessgeState: String? = nil
-    
-    var isFormValid: Bool {
-        !username.isEmptyOrWhitespace && !password.isEmptyOrWhitespace && password.count >= 6
+
+    @State private var viewModel: RegistrationViewModel
+
+    init(viewModel: RegistrationViewModel) {
+        self.viewModel = viewModel
     }
-    
-    private func register ()  async {
-        do {
-            let registeredResponseDTO = try await habitsViewModel.register(username: username, password: password)
-            if !registeredResponseDTO.error {
-                // go to the Login screen
-                appState.routes.append(.login)
-            }
-        } catch {
-            errorMessgeState = error.localizedDescription
-        }
-    }
+
     var body: some View {
         Form {
-            TextField("Username", text: $username)
+            TextField("Username", text: $viewModel.username)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
-            SecureField("Password", text: $password)
+            SecureField("Password", text: $viewModel.password)
 
             HStack {
                 Button("Register") {
-                    Task { await register() }
-
+                    Task {
+                        await viewModel.register()
+                    }
                 }.buttonStyle(.borderless)
-                    .disabled(!isFormValid)
+                    .disabled(!viewModel.isFormValid || viewModel.isLoading)
+
+                if viewModel.isLoading {
+                    ProgressView()
+                }
+
                 Spacer()
                 Button("Login") {
-                    appState.routes.append(.login)
+                    viewModel.navigateToLogin()
                 }.buttonStyle(.borderless)
             }
-            Text(errorMessgeState ?? "")
+            if let errorMessage = viewModel.errorMessage {
+                Text(errorMessage)
+                    .foregroundColor(.red)
+            }
         }
         .navigationTitle("Registration")
     }
 }
 
 #Preview {
-    NavigationStack {
-        RegistrationScreen()
-            .environment(HabitsViewModel())
-            .environment(AppState())
+    let authService = AuthenticationService()
+    let networkService = NetworkService(httpClient: HTTPClient(), authService: authService)
+    let coordinator = AppCoordinator()
+    let viewModel = RegistrationViewModel(networkService: networkService, coordinator: coordinator)
+
+    return NavigationStack {
+        RegistrationScreen(viewModel: viewModel)
     }
 }

@@ -53,13 +53,37 @@ struct Resource<T: Codable> {
     let url: URL
     var method: HTTPMethod = .get([])
     var modelType: T.Type
-    
+    var requiresAuth: Bool = false
+
 }
 
-struct HTTPClient {
+protocol HTTPClientProtocol {
+    func load<T: Codable>(_ resource: Resource<T>) async throws -> T
+}
+
+struct HTTPClient: HTTPClientProtocol {
+    private let session: URLSession
+    private let authService: AuthenticationServiceProtocol?
+
+    init(session: URLSession? = nil, authService: AuthenticationServiceProtocol? = nil) {
+        if let session = session {
+            self.session = session
+        } else {
+            let configuration = URLSessionConfiguration.default
+            configuration.httpAdditionalHeaders = ["Content-Type": "application/json"]
+            self.session = URLSession(configuration: configuration)
+        }
+        self.authService = authService
+    }
+
     func load<T: Codable>(_ resource: Resource<T>) async throws -> T {
         var urlRequest = URLRequest(url: resource.url)
-        
+
+        // Add auth header if resource requires authentication
+        if resource.requiresAuth, let token = authService?.getToken() {
+            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+
         switch resource.method {
         case .get(let queryItems):
             var components = URLComponents(url: resource.url, resolvingAgainstBaseURL: false)
@@ -67,20 +91,17 @@ struct HTTPClient {
             guard let url = components?.url else {
                 throw NetworkError.badURL
             }
-            
+
             urlRequest = URLRequest(url: url)
-            
+
         case .post(let data):
             urlRequest.httpMethod = resource.method.name
             urlRequest.httpBody = data
-            
+
         case .delete:
             urlRequest.httpMethod = resource.method.name
         }
-        
-        let configuration = URLSessionConfiguration.default
-        configuration.httpAdditionalHeaders = ["Content-Type": "application/json"]
-        let session = URLSession(configuration: configuration)
+
         let (data, response) = try await session.data(for: urlRequest)
         
         guard let response = response as? HTTPURLResponse else {
@@ -90,12 +111,12 @@ struct HTTPClient {
         switch response.statusCode {
         case 200...299:
             break // Successful response, proceed to decode
-        case 409:
-            throw NetworkError.serverError("User is already taken")
         case 400:
-            throw NetworkError.badRequest("User is not found")
+            throw NetworkError.badRequest("Bad request")
         case 401:
-            throw NetworkError.unauthorized("Invalid credentials")
+            throw NetworkError.unauthorized("Unauthorized")
+        case 409:
+            throw NetworkError.serverError("Conflict")
         default:
             throw NetworkError.serverError("Server error with status code: \(response.statusCode)")
         }

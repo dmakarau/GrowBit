@@ -10,59 +10,48 @@ import HabitTrackerAppSharedDTO
 
 struct LoginScreen: View {
 
-    @Environment(HabitsViewModel.self) private var habitsViewModel
-    @Environment(AppState.self) private var appState
+    @State private var viewModel: LoginViewModel
 
-    @State var username = ""
-    @State var password = ""
-    @State var serverErrorMessage: String? = nil
-    @State var clientErrorMessage: String? = nil
-    
-    private var isFormValid: Bool {
-        !username.isEmptyOrWhitespace && !password.isEmptyOrWhitespace && password.count >= 6
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
     }
-    
-    private func login ()  async {
-        do {
-            let loginResponseDTO = try await habitsViewModel.login(username: username, password: password)
-            if loginResponseDTO.error {
-                clientErrorMessage = loginResponseDTO.reason ?? ""
-            } else {
-                // take the user to categories list screen
-                appState.routes.append(.categoriesList)
-            }
-        } catch {
-            serverErrorMessage = error.localizedDescription
-        }
-    }
-    
-    
+
     var body: some View {
         Form {
-            TextField("Username", text: $username)
+            TextField("Username", text: $viewModel.username)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
-            SecureField("Password", text: $password)
+            SecureField("Password", text: $viewModel.password)
 
             HStack {
                 Button("Login") {
-                    serverErrorMessage = ""
-                    clientErrorMessage = ""
-                    Task { await login() }
+                    Task {
+                        await viewModel.login()
+                    }
                 }.buttonStyle(.borderless)
-                    .disabled(!isFormValid)
+                    .disabled(!viewModel.isFormValid || viewModel.isLoading)
+
+                if viewModel.isLoading {
+                    ProgressView()
+                }
             }
-            Text(serverErrorMessage ?? "")
-            Text(clientErrorMessage ?? "")
+            if let errorMessage = viewModel.errorMessage {
+                Text(errorMessage)
+                    .foregroundColor(.red)
+            }
         }
         .navigationTitle("Login")
     }
 }
 
 #Preview {
-    NavigationStack {
-        LoginScreen()
-            .environment(HabitsViewModel())
-            .environment(AppState())
+    let authService = AuthenticationService()
+    let httpClient = HTTPClient(authService: authService)
+    let networkService = NetworkService(httpClient: httpClient, authService: authService)
+    let coordinator = AppCoordinator()
+    let viewModel = LoginViewModel(networkService: networkService, authService: authService, coordinator: coordinator)
+
+    return NavigationStack {
+        LoginScreen(viewModel: viewModel)
     }
 }

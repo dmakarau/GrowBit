@@ -6,11 +6,24 @@ A SwiftUI iOS habit tracking application focused on clean architecture and user 
 
 ## 🏗 Architecture Overview
 
+The app follows a clean, protocol-oriented architecture with clear separation of concerns:
+
+- **MVVM Pattern**: ViewModels manage business logic and state
+- **Coordinator Pattern**: Centralized navigation via `AppCoordinator`
+- **Service Layer**: Protocol-based services (`NetworkService`, `AuthenticationService`)
+- **Dependency Injection**: Services injected via protocols for testability
+
 ```
 HabitTrackerApp/
 ├── HabitTrackerApp.xcodeproj    # Xcode project
 ├── HabitTrackerApp/             # SwiftUI iOS Application
-├── Shared/                      # Shared models and utilities
+│   ├── Screens/                 # Feature screens (Login, Registration, etc.)
+│   ├── ViewModels/              # MVVM view models
+│   ├── Services/                # Business logic services
+│   ├── Coordination/            # Navigation coordination
+│   ├── Components/              # Reusable UI components
+│   ├── Extensions/              # Swift extensions
+│   └── Utils/                   # Constants and utilities
 └── README.md
 ```
 
@@ -32,12 +45,12 @@ HabitTrackerApp/
 
 ### iOS Application
 - **SwiftUI**: Modern declarative UI framework
-- **Combine**: Reactive programming for data flow
-- **Core Data**: Local data persistence
-- **CloudKit**: iCloud synchronization
-- **Calendar Integration**: Native iOS calendar components
+- **Swift 6.0+**: Latest Swift features with strict concurrency
+- **@Observable**: Modern state management with Observation framework
+- **URLSession**: Native networking with async/await
+- **Core Data**: Local data persistence (planned)
+- **CloudKit**: iCloud synchronization (planned)
 - **SF Symbols**: Apple's icon system
-- **WidgetKit**: Home screen widget support
 - **HabitTrackerAppSharedDTO**: Shared Swift package for data transfer objects with backend
 
 ## 📋 Core Data Models
@@ -94,11 +107,16 @@ open HabitTrackerApp.xcodeproj
 
 ### Phase 1: Foundation ✅
 - [x] Project structure setup and organization
-- [x] Basic SwiftUI client structure
+- [x] Clean architecture with protocol-oriented design
+- [x] MVVM pattern implementation
+- [x] Coordinator pattern for navigation
+- [x] Service layer architecture (HTTPClient, NetworkService, AuthenticationService)
 - [x] User registration and login functionality
 - [x] Backend integration with shared DTO package
+- [x] Token-based authentication with secure storage
+- [x] AddCategory screen with color selector component
 - [ ] Core Data model setup
-- [ ] Basic UI navigation structure
+- [x] Basic UI navigation structure
 
 ### Phase 2: Core Data & Models 🔧
 - [ ] Core Data stack implementation
@@ -141,16 +159,31 @@ HabitTrackerApp/
 ├── HabitTrackerApp.xcodeproj          # Xcode project
 ├── HabitTrackerApp/                   # iOS app source
 │   ├── HabitTrackerAppApp.swift       # App entry point
-│   ├── ContentView.swift              # Main view
-│   ├── Models/                        # Core Data models
-│   ├── Views/                         # SwiftUI views
+│   ├── Screens/                       # Feature screens
+│   │   ├── LoginScreen.swift
+│   │   ├── RegistrationScreen.swift
+│   │   └── AddCategoryScreen.swift
 │   ├── ViewModels/                    # MVVM view models
-│   ├── Services/                      # Data services
+│   │   ├── LoginViewModel.swift
+│   │   ├── RegistrationViewModel.swift
+│   │   └── AddCategoryViewModel.swift
+│   ├── Services/                      # Business logic services
+│   │   ├── NetworkService.swift       # API communication
+│   │   ├── AuthenticationService.swift # Auth & token management
+│   │   └── Client/
+│   │       └── HTTPClient.swift       # Low-level HTTP client
+│   ├── Coordination/                  # Navigation management
+│   │   └── AppCoordinator.swift
+│   ├── Components/                    # Reusable UI components
+│   │   └── ColorSelector.swift
+│   ├── Extensions/                    # Swift extensions
+│   │   ├── Color+Extensions.swift
+│   │   └── Strings+Extensions.swift
+│   ├── Utils/                         # Constants and utilities
+│   │   └── Constants.swift
 │   └── Assets.xcassets/               # App assets
-├── HabitTrackerAppTests/              # Unit tests
-├── HabitTrackerAppUITests/            # UI tests
-├── Widgets/                           # Widget extension
-├── Shared/                            # Shared models and utilities
+├── HabitTrackerAppTests/              # Unit tests (planned)
+├── HabitTrackerAppUITests/            # UI tests (planned)
 ├── CLAUDE.md                          # Claude Code guidance
 ├── LICENSE
 └── README.md
