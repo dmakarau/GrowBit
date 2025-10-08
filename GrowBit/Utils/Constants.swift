@@ -39,5 +39,9 @@ struct Constants {
             }
             return url
         }
+        
+        static func getCategoriesForUser(userId: UUID) throws -> URL {
+            try saveCategory(userId: userId)
+        }
     }
 }

@@ -6,15 +6,18 @@
 //
 
 import SwiftUI
+import GrowBitSharedDTO
 
 struct AddCategoryScreen: View {
 
     @State private var viewModel: AddCategoryViewModel
+    var onAdd: (CategoryResponseDTO) -> Void
 
     @Environment(\.dismiss) private var dismiss
 
-    init(viewModel: AddCategoryViewModel) {
+    init(viewModel: AddCategoryViewModel, onAdd: @escaping (CategoryResponseDTO) -> Void) {
         self.viewModel = viewModel
+        self.onAdd = onAdd
     }
 
     var body: some View {
@@ -43,6 +46,7 @@ struct AddCategoryScreen: View {
                         Task {
                             let success = await viewModel.saveCategory()
                             if success {
+                                onAdd(viewModel.createdCategory!)
                                 dismiss()
                             }
                         }
@@ -59,7 +63,9 @@ struct AddCategoryScreen: View {
     let networkService = NetworkService(httpClient: HTTPClient(), authService: authService)
     let viewModel = AddCategoryViewModel(networkService: networkService)
 
-    return NavigationStack {
-        AddCategoryScreen(viewModel: viewModel)
+    NavigationStack {
+        AddCategoryScreen(viewModel: viewModel) {
+            print("Added category: \($0)")
+        }
     }
 }

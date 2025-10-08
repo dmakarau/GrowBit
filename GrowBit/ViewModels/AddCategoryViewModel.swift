@@ -17,6 +17,7 @@ class AddCategoryViewModel {
     var colorCode = ""
     var errorMessage: String?
     var isLoading = false
+    var createdCategory: CategoryResponseDTO? = nil
 
     init(networkService: NetworkServiceProtocol) {
         self.networkService = networkService
@@ -37,7 +38,7 @@ class AddCategoryViewModel {
         )
 
         do {
-            _ = try await networkService.saveCategory(requestDTO)
+            self.createdCategory = try await networkService.saveCategory(requestDTO)
             // Category saved successfully with ID: savedCategory.id
             return true
         } catch {
