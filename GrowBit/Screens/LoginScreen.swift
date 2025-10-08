@@ -1,19 +1,18 @@
 //
-//  RegistrationScreen.swift
-//  HabitTrackerApp
+//  LoginScreen.swift
+//  GrowBit
 //
-//  Created by Denis Makarau on 25.09.25.
+//  Created by Denis Makarau on 02.10.25.
 //
 
 import SwiftUI
-import Observation
 import HabitTrackerAppSharedDTO
 
-struct RegistrationScreen: View {
+struct LoginScreen: View {
 
-    @State private var viewModel: RegistrationViewModel
+    @State private var viewModel: LoginViewModel
 
-    init(viewModel: RegistrationViewModel) {
+    init(viewModel: LoginViewModel) {
         self.viewModel = viewModel
     }
 
@@ -25,9 +24,9 @@ struct RegistrationScreen: View {
             SecureField("Password", text: $viewModel.password)
 
             HStack {
-                Button("Register") {
+                Button("Login") {
                     Task {
-                        await viewModel.register()
+                        await viewModel.login()
                     }
                 }.buttonStyle(.borderless)
                     .disabled(!viewModel.isFormValid || viewModel.isLoading)
@@ -35,28 +34,24 @@ struct RegistrationScreen: View {
                 if viewModel.isLoading {
                     ProgressView()
                 }
-
-                Spacer()
-                Button("Login") {
-                    viewModel.navigateToLogin()
-                }.buttonStyle(.borderless)
             }
             if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage)
                     .foregroundColor(.red)
             }
         }
-        .navigationTitle("Registration")
+        .navigationTitle("Login")
     }
 }
 
 #Preview {
     let authService = AuthenticationService()
-    let networkService = NetworkService(httpClient: HTTPClient(), authService: authService)
+    let httpClient = HTTPClient(authService: authService)
+    let networkService = NetworkService(httpClient: httpClient, authService: authService)
     let coordinator = AppCoordinator()
-    let viewModel = RegistrationViewModel(networkService: networkService, coordinator: coordinator)
+    let viewModel = LoginViewModel(networkService: networkService, authService: authService, coordinator: coordinator)
 
     return NavigationStack {
-        RegistrationScreen(viewModel: viewModel)
+        LoginScreen(viewModel: viewModel)
     }
 }

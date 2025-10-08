@@ -1,6 +1,6 @@
 //
 //  Strings+Extensions.swift
-//  HabitTrackerApp
+//  GrowBit
 //
 //  Created by Denis Makarau on 25.09.25.
 //

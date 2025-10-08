@@ -1,6 +1,6 @@
 //
-//  HabitTrackerAppApp.swift
-//  HabitTrackerApp
+//  GrowBitApp.swift
+//  GrowBit
 //
 //  Created by Denis Makarau on 23.09.25.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct HabitTrackerAppApp: App {
+struct GrowBitApp: App {
     @State private var coordinator = AppCoordinator()
 
     let httpClient: HTTPClient

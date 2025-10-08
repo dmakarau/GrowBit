@@ -1,4 +1,4 @@
-# HabitTrackerApp
+# GrowBit
 
 A SwiftUI iOS habit tracking application focused on clean architecture and user experience.
 
@@ -14,9 +14,9 @@ The app follows a clean, protocol-oriented architecture with clear separation of
 - **Dependency Injection**: Services injected via protocols for testability
 
 ```
-HabitTrackerApp/
-├── HabitTrackerApp.xcodeproj    # Xcode project
-├── HabitTrackerApp/             # SwiftUI iOS Application
+GrowBit/
+├── GrowBit.xcodeproj            # Xcode project
+├── GrowBit/                     # SwiftUI iOS Application
 │   ├── Screens/                 # Feature screens (Login, Registration, etc.)
 │   ├── ViewModels/              # MVVM view models
 │   ├── Services/                # Business logic services
@@ -94,7 +94,7 @@ HabitTrackerApp/
 
 ### Setup
 ```bash
-open HabitTrackerApp.xcodeproj
+open GrowBit.xcodeproj
 # Build and run in Xcode simulator
 ```
 
@@ -155,10 +155,10 @@ open HabitTrackerApp.xcodeproj
 ## 📁 Project Structure
 
 ```
-HabitTrackerApp/
-├── HabitTrackerApp.xcodeproj          # Xcode project
-├── HabitTrackerApp/                   # iOS app source
-│   ├── HabitTrackerAppApp.swift       # App entry point
+GrowBit/
+├── GrowBit.xcodeproj                  # Xcode project
+├── GrowBit/                           # iOS app source
+│   ├── GrowBitApp.swift               # App entry point
 │   ├── Screens/                       # Feature screens
 │   │   ├── LoginScreen.swift
 │   │   ├── RegistrationScreen.swift
@@ -182,8 +182,8 @@ HabitTrackerApp/
 │   ├── Utils/                         # Constants and utilities
 │   │   └── Constants.swift
 │   └── Assets.xcassets/               # App assets
-├── HabitTrackerAppTests/              # Unit tests (planned)
-├── HabitTrackerAppUITests/            # UI tests (planned)
+├── GrowBitTests/                      # Unit tests (planned)
+├── GrowBitUITests/                    # UI tests (planned)
 ├── CLAUDE.md                          # Claude Code guidance
 ├── LICENSE
 └── README.md

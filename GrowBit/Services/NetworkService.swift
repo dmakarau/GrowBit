@@ -1,6 +1,6 @@
 //
 //  NetworkService.swift
-//  HabitTrackerApp
+//  GrowBit
 //
 //  Created by Denis Makarau on 29.09.25.
 //

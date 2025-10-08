@@ -1,6 +1,6 @@
 //
-//  RegistrationViewModel.swift
-//  HabitTrackerApp
+//  LoginViewModel.swift
+//  GrowBit
 //
 //  Created by Denis Makarau on 08.10.25.
 //
@@ -9,9 +9,10 @@ import Foundation
 import HabitTrackerAppSharedDTO
 
 @Observable
-class RegistrationViewModel {
+class LoginViewModel {
 
     private let networkService: NetworkServiceProtocol
+    private let authService: AuthenticationServiceProtocol
     private let coordinator: AppCoordinatorProtocol
 
     var username = ""
@@ -19,8 +20,9 @@ class RegistrationViewModel {
     var errorMessage: String? = nil
     var isLoading = false
 
-    init(networkService: NetworkServiceProtocol, coordinator: AppCoordinatorProtocol) {
+    init(networkService: NetworkServiceProtocol, authService: AuthenticationServiceProtocol, coordinator: AppCoordinatorProtocol) {
         self.networkService = networkService
+        self.authService = authService
         self.coordinator = coordinator
     }
 
@@ -28,24 +30,24 @@ class RegistrationViewModel {
         !username.isEmptyOrWhitespace && !password.isEmptyOrWhitespace && password.count >= 6
     }
 
-    func register() async {
+    func login() async {
         errorMessage = nil
         isLoading = true
         defer { isLoading = false }
 
         do {
-            let registeredResponseDTO = try await networkService.register(username: username, password: password)
-            if !registeredResponseDTO.error {
-                coordinator.navigateToLogin()
+            let loginResponseDTO = try await networkService.login(username: username, password: password)
+
+            // Save authentication data in ViewModel
+            if let token = loginResponseDTO.token {
+                authService.saveToken(token)
+                authService.saveUserId(loginResponseDTO.userId)
+                coordinator.navigateToCategoriesList()
             } else {
-                errorMessage = registeredResponseDTO.reason ?? "Registration failed"
+                errorMessage = "Invalid response from server"
             }
         } catch {
             errorMessage = error.localizedDescription
         }
-    }
-
-    func navigateToLogin() {
-        coordinator.navigateToLogin()
     }
 }
