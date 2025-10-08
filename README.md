@@ -2,8 +2,6 @@
 
 A SwiftUI iOS habit tracking application focused on clean architecture and user experience.
 
-> **Learning Goal**: This project serves as a hands-on learning experience for iOS development with SwiftUI and modern iOS architecture patterns.
-
 ## 🏗 Architecture Overview
 
 The app follows a clean, protocol-oriented architecture with clear separation of concerns:
