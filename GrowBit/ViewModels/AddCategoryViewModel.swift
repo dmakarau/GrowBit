@@ -31,13 +31,13 @@ class AddCategoryViewModel {
         isLoading = true
         defer { isLoading = false }
 
-        let request = CategoryRequestDTO(
+        let requestDTO = CategoryRequestDTO(
             name: categoryName,
             colorCode: colorCode
         )
 
         do {
-            let savedCategory = try await networkService.saveCategory(request)
+            _ = try await networkService.saveCategory(requestDTO)
             // Category saved successfully with ID: savedCategory.id
             return true
         } catch {

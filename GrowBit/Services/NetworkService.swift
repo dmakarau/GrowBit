@@ -66,7 +66,7 @@ class NetworkService: NetworkServiceProtocol {
         )
         resource.requiresAuth = true
 
-        let newHabitCategory = try await httpClient.load(resource)
-        return newHabitCategory
+        let newCategory = try await httpClient.load(resource)
+        return newCategory
     }
 }
