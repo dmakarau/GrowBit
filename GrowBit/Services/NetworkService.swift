@@ -6,12 +6,12 @@
 //
 
 import Foundation
-import HabitTrackerAppSharedDTO
+import GrowBitSharedDTO
 
 protocol NetworkServiceProtocol {
     func register(username: String, password: String) async throws -> RegisterResponseDTO
     func login(username: String, password: String) async throws -> LoginResponseDTO
-    func saveCategory(_ habitCategoryRequestDTO: HabitsCategoryRequestDTO) async throws -> HabitsCategoryResponseDTO
+    func saveCategory(_ categoryRequestDTO: CategoryRequestDTO) async throws -> CategoryResponseDTO
 }
 
 @Observable
@@ -54,15 +54,15 @@ class NetworkService: NetworkServiceProtocol {
         return loginResponseDTO
     }
 
-    func saveCategory(_ habitCategoryRequestDTO: HabitsCategoryRequestDTO) async throws -> HabitsCategoryResponseDTO {
+    func saveCategory(_ categoryRequestDTO: CategoryRequestDTO) async throws -> CategoryResponseDTO {
         guard let userId = authService.getUserId() else {
             throw NetworkError.unauthorized("User not authenticated")
         }
 
         var resource = try Resource(
             url: Constants.Urls.saveCategory(userId: userId),
-            method: .post(JSONEncoder().encode(habitCategoryRequestDTO)),
-            modelType: HabitsCategoryResponseDTO.self
+            method: .post(JSONEncoder().encode(categoryRequestDTO)),
+            modelType: CategoryResponseDTO.self
         )
         resource.requiresAuth = true
 

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import HabitTrackerAppSharedDTO
+import GrowBitSharedDTO
 
 @Observable
 class AddCategoryViewModel {
@@ -31,7 +31,7 @@ class AddCategoryViewModel {
         isLoading = true
         defer { isLoading = false }
 
-        let request = HabitsCategoryRequestDTO(
+        let request = CategoryRequestDTO(
             name: categoryName,
             colorCode: colorCode
         )

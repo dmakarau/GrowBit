@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import HabitTrackerAppSharedDTO
+import GrowBitSharedDTO
 
 @Observable
 class RegistrationViewModel {

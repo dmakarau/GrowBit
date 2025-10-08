@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F2974D292E9028A90049D217 /* HabitTrackerAppSharedDTO in Frameworks */ = {isa = PBXBuildFile; productRef = F2974D282E9028A90049D217 /* HabitTrackerAppSharedDTO */; };
+		F27C2E3B2E9668AD00749144 /* GrowBitSharedDTO in Frameworks */ = {isa = PBXBuildFile; productRef = F27C2E3A2E9668AD00749144 /* GrowBitSharedDTO */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F2974D292E9028A90049D217 /* HabitTrackerAppSharedDTO in Frameworks */,
+				F27C2E3B2E9668AD00749144 /* GrowBitSharedDTO in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +70,7 @@
 			);
 			name = GrowBit;
 			packageProductDependencies = (
-				F2974D282E9028A90049D217 /* HabitTrackerAppSharedDTO */,
+				F27C2E3A2E9668AD00749144 /* GrowBitSharedDTO */,
 			);
 			productName = HabitTrackerApp;
 			productReference = F226D5B22E83352C00B9858E /* GrowBit.app */;
@@ -101,7 +101,7 @@
 			mainGroup = F226D5A92E83352C00B9858E;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				F2974D272E9028A90049D217 /* XCRemoteSwiftPackageReference "HabitTrackerAppSharedDTO" */,
+				F27C2E392E9668AD00749144 /* XCRemoteSwiftPackageReference "GrowBitSharedDTO" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F226D5B32E83352C00B9858E /* Products */;
@@ -345,9 +345,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		F2974D272E9028A90049D217 /* XCRemoteSwiftPackageReference "HabitTrackerAppSharedDTO" */ = {
+		F27C2E392E9668AD00749144 /* XCRemoteSwiftPackageReference "GrowBitSharedDTO" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/dmakarau/HabitTrackerAppSharedDTO.git";
+			repositoryURL = "https://github.com/dmakarau/GrowBitSharedDTO";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -356,10 +356,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		F2974D282E9028A90049D217 /* HabitTrackerAppSharedDTO */ = {
+		F27C2E3A2E9668AD00749144 /* GrowBitSharedDTO */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F2974D272E9028A90049D217 /* XCRemoteSwiftPackageReference "HabitTrackerAppSharedDTO" */;
-			productName = HabitTrackerAppSharedDTO;
+			package = F27C2E392E9668AD00749144 /* XCRemoteSwiftPackageReference "GrowBitSharedDTO" */;
+			productName = GrowBitSharedDTO;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

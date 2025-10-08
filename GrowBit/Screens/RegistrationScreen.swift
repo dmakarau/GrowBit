@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Observation
-import HabitTrackerAppSharedDTO
+import GrowBitSharedDTO
 
 struct RegistrationScreen: View {
 
