@@ -38,6 +38,8 @@ struct CategoryListScreen: View {
                                 .frame(width: 25, height: 25)
                             Text(category.name)
                         }
+                    }.onDelete { indexSet in
+                        Task {await viewModel.deleteCategory(offset: indexSet) }
                     }
                 }
                 .navigationTitle("Categories")

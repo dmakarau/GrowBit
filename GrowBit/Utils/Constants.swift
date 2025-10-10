@@ -43,5 +43,12 @@ struct Constants {
         static func getCategoriesForUser(userId: UUID) throws -> URL {
             try saveCategory(userId: userId)
         }
+        
+        static func deleteCategory(userId: UUID, categoryId: UUID) throws -> URL {
+            guard let url = URL(string: "\(baseURL)/\(userId)/categories/\(categoryId)") else {
+                throw URLError.invalidURL
+            }
+            return url
+        }
     }
 }

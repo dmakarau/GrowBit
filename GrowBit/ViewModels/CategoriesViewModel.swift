@@ -39,6 +39,16 @@ class CategoriesViewModel {
         self.categories.append(category)
     }
     
-    func deleteCategory() async {
+    func deleteCategory(offset: IndexSet) async {
+        for index in offset {
+            let categoryId = categories[index].id
+            do {
+                _ = try await networkService.deleteCategory(categoryId: categoryId)
+                categories.remove(at: index)
+            } catch {
+                // Optionally handle the error, e.g., set errorMessage
+            }
+        }
     }
 }
+
