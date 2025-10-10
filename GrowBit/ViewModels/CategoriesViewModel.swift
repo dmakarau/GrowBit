@@ -46,7 +46,7 @@ class CategoriesViewModel {
                 _ = try await networkService.deleteCategory(categoryId: categoryId)
                 categories.remove(at: index)
             } catch {
-                // Optionally handle the error, e.g., set errorMessage
+                errorMessage = error.localizedDescription
             }
         }
     }

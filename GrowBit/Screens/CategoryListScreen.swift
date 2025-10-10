@@ -17,7 +17,7 @@ struct CategoryListScreen: View {
     }
     
     var body: some View {
-        VStack {
+        ZStack {
             if viewModel.isLoading {
                 ProgressView("Loading Categories...")
                 
@@ -29,7 +29,12 @@ struct CategoryListScreen: View {
                     }
                     .padding()
                 }
-            } else {
+            } else if viewModel.categories.isEmpty {
+                HStack {
+                    Text("No categories available. Please add a new category.")
+                }                .padding()
+            }
+            else {
                 List {
                     ForEach(viewModel.categories) { category in
                         HStack {
@@ -42,31 +47,30 @@ struct CategoryListScreen: View {
                         Task {await viewModel.deleteCategory(offset: indexSet) }
                     }
                 }
-                .navigationTitle("Categories")
-                .navigationBarBackButtonHidden(true)
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button("Logout") {
-                            
-                        }
-                    }
+            }
+        }
+        .navigationTitle("Categories")
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button("Logout") {
                     
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            showAddCategory = true
-                        } label: {
-                            Image(systemName: "plus")
-                        }
-                    }
-
                 }
-                .sheet(isPresented: $showAddCategory) {
-                    NavigationStack {
-                        AddCategoryScreen(viewModel: AddCategoryViewModel(networkService: viewModel.networkService)) { newCategory in
-                            viewModel.addCategory(newCategory)
-                        }
-                    }
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    showAddCategory = true
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
 
+        }
+        .sheet(isPresented: $showAddCategory) {
+            NavigationStack {
+                AddCategoryScreen(viewModel: AddCategoryViewModel(networkService: viewModel.networkService)) { newCategory in
+                    viewModel.addCategory(newCategory)
                 }
             }
         }
@@ -79,4 +83,3 @@ struct CategoryListScreen: View {
     let viewModel = CategoriesViewModel(networkService: networkService)
     CategoryListScreen(viewModel: viewModel)
 }
-
