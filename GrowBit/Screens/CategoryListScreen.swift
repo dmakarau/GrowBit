@@ -43,10 +43,22 @@ struct CategoryListScreen: View {
                     }
                 }
                 .navigationTitle("Categories")
+                .navigationBarBackButtonHidden(true)
                 .toolbar {
-                    Button("Add") {
-                        showAddCategory = true
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("Logout") {
+                            
+                        }
                     }
+                    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            showAddCategory = true
+                        } label: {
+                            Image(systemName: "plus")
+                        }
+                    }
+
                 }
                 .sheet(isPresented: $showAddCategory) {
                     NavigationStack {
@@ -67,3 +79,4 @@ struct CategoryListScreen: View {
     let viewModel = CategoriesViewModel(networkService: networkService)
     CategoryListScreen(viewModel: viewModel)
 }
+
