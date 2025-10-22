@@ -45,11 +45,10 @@ struct LoginScreen: View {
 }
 
 #Preview {
-    let authService = AuthenticationService()
-    let httpClient = HTTPClient(authService: authService)
-    let networkService = NetworkService(httpClient: httpClient, authService: authService)
+    let mockAuthService = MockAuthenticationService(isAuthenticated: false)
+    let mockNetworkService = MockNetworkService()
     let coordinator = AppCoordinator()
-    let viewModel = LoginViewModel(networkService: networkService, authService: authService, coordinator: coordinator)
+    let viewModel = LoginViewModel(networkService: mockNetworkService, authService: mockAuthService, coordinator: coordinator)
 
     return NavigationStack {
         LoginScreen(viewModel: viewModel)

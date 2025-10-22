@@ -59,9 +59,8 @@ struct AddCategoryScreen: View {
 }
 
 #Preview {
-    let authService = AuthenticationService()
-    let networkService = NetworkService(httpClient: HTTPClient(), authService: authService)
-    let viewModel = AddCategoryViewModel(networkService: networkService)
+    let mockService = MockNetworkService()
+    let viewModel = AddCategoryViewModel(networkService: mockService)
 
     NavigationStack {
         AddCategoryScreen(viewModel: viewModel) {

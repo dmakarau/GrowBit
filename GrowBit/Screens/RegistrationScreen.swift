@@ -51,12 +51,13 @@ struct RegistrationScreen: View {
 }
 
 #Preview {
-    let authService = AuthenticationService()
-    let networkService = NetworkService(httpClient: HTTPClient(), authService: authService)
+    let mockNetworkService = MockNetworkService()
     let coordinator = AppCoordinator()
-    let viewModel = RegistrationViewModel(networkService: networkService, coordinator: coordinator)
+    let viewModel = RegistrationViewModel(networkService: mockNetworkService, coordinator: coordinator)
 
     return NavigationStack {
         RegistrationScreen(viewModel: viewModel)
     }
 }
+
+

@@ -52,7 +52,6 @@ struct CategoryListScreen: View {
                             viewModel.addCategory(newCategory)
                         }
                     }
-
                 }
             }
         }
@@ -60,8 +59,9 @@ struct CategoryListScreen: View {
 }
 
 #Preview {
-    let authService = AuthenticationService()
-    let networkService = NetworkService(httpClient: HTTPClient(), authService: authService)
-    let viewModel = CategoriesViewModel(networkService: networkService)
-    CategoryListScreen(viewModel: viewModel)
+    let mockService = MockNetworkService()
+    let viewModel = CategoriesViewModel(networkService: mockService)
+    return NavigationStack {
+        CategoryListScreen(viewModel: viewModel)
+    }
 }
