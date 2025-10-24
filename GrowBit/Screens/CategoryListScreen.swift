@@ -38,6 +38,9 @@ struct CategoryListScreen: View {
                                 .frame(width: 25, height: 25)
                             Text(category.name)
                         }
+                        .onTapGesture {
+                            viewModel.navigateToHabitList(for: category)
+                        }
                     }
                 }
                 .navigationTitle("Categories")
@@ -60,8 +63,9 @@ struct CategoryListScreen: View {
 
 #Preview {
     let mockService = MockNetworkService()
-    let viewModel = CategoriesViewModel(networkService: mockService)
-    return NavigationStack {
+    let coordinator = AppCoordinator()
+    let viewModel = CategoriesViewModel(networkService: mockService, coordinator: coordinator)
+    NavigationStack {
         CategoryListScreen(viewModel: viewModel)
     }
 }

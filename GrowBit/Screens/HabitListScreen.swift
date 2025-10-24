@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GrowBitSharedDTO
 
 struct HabitListScreen: View {
     @State private var  viewModel: HabitListViewModel
@@ -39,7 +40,9 @@ struct HabitListScreen: View {
 #Preview {
     let authService = AuthenticationService()
     let networkService = NetworkService(httpClient: HTTPClient(), authService: authService)
-    let viewModel = HabitListViewModel(networkService: networkService)
+    let coordinator = AppCoordinator()
+    let category = CategoryResponseDTO(id: UUID(), name: "Health", colorCode: "#FF5733")
+    let viewModel = HabitListViewModel(networkService: networkService, coordinator: coordinator, category: category)
     NavigationStack {
         HabitListScreen(viewModel: viewModel)
     }

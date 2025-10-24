@@ -15,9 +15,11 @@ class CategoriesViewModel {
     var categories = [CategoryResponseDTO]()
     var errorMessage: String?
     var isLoading = false
+    private let coordinator: AppCoordinatorProtocol
     
-    init(networkService: NetworkServiceProtocol) {
+    init(networkService: NetworkServiceProtocol, coordinator: AppCoordinatorProtocol) {
         self.networkService = networkService
+        self.coordinator = coordinator
         Task { await populateCategories() }
     }
     
@@ -33,6 +35,10 @@ class CategoriesViewModel {
         } catch {
             errorMessage = error.localizedDescription
         }
+    }
+    
+    func navigateToHabitList(for category: CategoryResponseDTO) {
+        coordinator.navigateToHabitsList(for: category)
     }
     
     func addCategory(_ category: CategoryResponseDTO) {

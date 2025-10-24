@@ -50,9 +50,13 @@ struct GrowBitApp: App {
                     case .categoriesList:
                         CategoryListScreen(
                             viewModel: CategoriesViewModel(
-                                networkService: networkService
+                                networkService: networkService,
+                                coordinator: coordinator
+                            
                             )
                         )
+                    case .habitsList(let category):
+                        Text("Habits for category: \(category)")
                     }
                 }
             }

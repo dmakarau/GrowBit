@@ -12,11 +12,15 @@ import GrowBitSharedDTO
 class HabitListViewModel {
     let networkService: NetworkServiceProtocol
     var items = [ItemResponseDTO]()
+    let category: CategoryResponseDTO
     var errorMessage: String?
     var isLoading = false
+    private let coordinator: AppCoordinatorProtocol
     
-    init(networkService: NetworkServiceProtocol) {
+    init(networkService: NetworkServiceProtocol, coordinator: AppCoordinatorProtocol, category: CategoryResponseDTO) {
         self.networkService = networkService
+        self.coordinator = coordinator
+        self.category = category
         Task { await populateItems() }
     }
     
@@ -33,7 +37,7 @@ class HabitListViewModel {
             errorMessage = error.localizedDescription
         }
     }
-    
+
     
 }
     

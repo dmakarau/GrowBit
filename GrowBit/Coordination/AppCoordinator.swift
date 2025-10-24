@@ -7,11 +7,13 @@
 
 import Foundation
 import SwiftUI
+import GrowBitSharedDTO
 
-enum Route: Hashable {
+enum Route: Hashable, Equatable {
     case login
     case register
     case categoriesList
+    case habitsList(categoryDTO: CategoryResponseDTO)
 }
 
 protocol AppCoordinatorProtocol {
@@ -19,6 +21,7 @@ protocol AppCoordinatorProtocol {
     func navigateToLogin()
     func navigateToRegister()
     func navigateToCategoriesList()
+    func navigateToHabitsList(for category: CategoryResponseDTO)
     func pop()
     func popToRoot()
 }
@@ -37,6 +40,10 @@ class AppCoordinator: AppCoordinatorProtocol {
 
     func navigateToCategoriesList() {
         routes.append(.categoriesList)
+    }
+    
+    func navigateToHabitsList(for category: CategoryResponseDTO) {
+        routes.append(.habitsList(categoryDTO: category))
     }
 
     func pop() {
