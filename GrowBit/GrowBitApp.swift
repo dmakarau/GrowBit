@@ -48,12 +48,11 @@ struct GrowBitApp: App {
                             )
                         )
                     case .categoriesList:
-                        AddCategoryScreen(
-                            viewModel: AddCategoryViewModel(
+                        CategoryListScreen(
+                            viewModel: CategoriesViewModel(
                                 networkService: networkService
                             )
                         )
-                        Text("Categories List") // CategoriesListScreen()
                     }
                 }
             }

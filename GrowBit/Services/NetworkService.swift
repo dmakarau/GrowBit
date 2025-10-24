@@ -12,6 +12,8 @@ protocol NetworkServiceProtocol {
     func register(username: String, password: String) async throws -> RegisterResponseDTO
     func login(username: String, password: String) async throws -> LoginResponseDTO
     func saveCategory(_ categoryRequestDTO: CategoryRequestDTO) async throws -> CategoryResponseDTO
+    func getCategories() async throws -> [CategoryResponseDTO]
+    func deleteCategory(categoryId: UUID) async throws -> CategoryResponseDTO
 }
 
 @Observable
@@ -68,5 +70,33 @@ class NetworkService: NetworkServiceProtocol {
 
         let newCategory = try await httpClient.load(resource)
         return newCategory
+    }
+    
+    func getCategories() async throws -> [CategoryResponseDTO] {
+        guard let userId = authService.getUserId() else {
+            throw NetworkError.unauthorized("User not authenticated")
+        }
+        
+        var resource = try Resource(
+            url: Constants.Urls.getCategoriesForUser(userId: userId),
+            method: .get([]),
+            modelType: [CategoryResponseDTO].self
+        )
+        resource.requiresAuth = true
+        return try await httpClient.load(resource)
+    }
+    
+    func deleteCategory(categoryId: UUID) async throws -> CategoryResponseDTO {
+        guard let userId = authService.getUserId() else {
+            throw NetworkError.unauthorized("User not authenticated")
+        }
+        
+        let resouce = try Resource(
+            url: Constants.Urls.deleteCategory(userId: userId, categoryId: categoryId),
+            method: .delete,
+            modelType: CategoryResponseDTO.self
+        )
+        
+        return try await httpClient.load(resouce)
     }
 }
